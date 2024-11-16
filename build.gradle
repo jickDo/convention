@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id "io.spring.javaformat" version "0.0.42" //add javaformat
 }
 
 group = 'com.convention'
@@ -23,6 +24,15 @@ repositories {
 	mavenCentral()
 }
 
+
+/***
+ * before
+ *
+ * 	repositories
+ * 	mavenCentral()
+ */
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	compileOnly 'org.projectlombok:lombok'
@@ -34,3 +44,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+/*** 미적용 위치 선언
+ * 	tasks.withType(io.spring.javaformat.gradle.tasks.CheckFormat)
+ *  exclude "package/to/exclude"
+ */
