@@ -3,6 +3,8 @@ plugins {
 	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.6'
 	id "io.spring.javaformat" version "0.0.42" //add javaformat
+	id 'checkstyle' //checkstyle
+	id 'org.ec4j.editorconfig' version '0.0.3'
 }
 
 group = 'com.convention'
@@ -49,3 +51,27 @@ tasks.named('test') {
  * 	tasks.withType(io.spring.javaformat.gradle.tasks.CheckFormat)
  *  exclude "package/to/exclude"
  */
+
+// editorconfig
+editorconfig {
+	excludes = ['build']
+}
+
+check.dependsOn editorconfigCheck
+
+//checkstyle
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+tasks.withType(Checkstyle).configureEach {
+	reports {
+		xml.required = true
+		html.required = true
+	}
+}
+
+checkstyle {
+	maxWarnings = 0
+	configFile = file("checkstyle/naver-checkstyle-rules.xml")
+	configProperties = ["suppressionFile": "checkstyle/naver-checkstyle-suppressions.xml"]
+}
